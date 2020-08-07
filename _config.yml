@@ -28,6 +28,8 @@ github:
 twitter:
   username: twitter_username            # change to your twitter username
 
+excerpt_separator: __MORE__
+
 social:
   name: Ali Mousavi Kherad                  # it will shows as the copyright owner in Footer
   email: alimousavikherad@outlook.com             # change to your email address

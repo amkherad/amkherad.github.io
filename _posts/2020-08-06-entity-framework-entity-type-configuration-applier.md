@@ -1,9 +1,13 @@
 ---
+excerpt_separator: __MORE__
 title: Entity Framework Core - Automatic EntityTypeConfiguration registeration
 tags: EntityFrameworkCore automatically register EntityTypeConfiguration multi-context multiple DbContext
+categories: [DotNET, Entity Framework]
 ---
 
 In this article I'm going to create a simple helper class to automatically register all EntityTypeConfigurations in an assembly.
+
+__MORE__
 
 One way to organize entity framework's fluent configurations would be to put them in separate class that implements
 the `IEntityTypeConfiguration<TEntity>` interface. But with a growing application remembering to apply new configurations
@@ -12,8 +16,7 @@ using `ApplyConfiguration` method in `ModelBuilder` class can be challenging.
 Another usage would be when you want to separate
 your migration context from other contexts that are used throughout your application (it's usefull to increase the performance for DbContext creation).
 
-You can using reflection to register the configuration without having to worry about performance, because EF already does
-a lot when it's making a new instance of DbContext so adding a little reflection penalty is nothing.
+You can using reflection to register the configuration without having to worry about performance, because EF already does a lot when it's making a new instance of DbContext so adding a little reflection penalty is nothing.
 
 ---
 
