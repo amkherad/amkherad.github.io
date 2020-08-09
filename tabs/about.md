@@ -6,9 +6,9 @@ Full-stack developer with 10+ years experience in making small to big applicatio
 # Skills
 * Highly skilled with [.NET Platform](/pages/skills/dotnet/dotnet-programmer-details)
 * Highly skilled with [Javascript Stack](/pages/skills/js-ts/javascript-programmer-details)
-* Experienced with [C++](/tags/c-plus-plus)
+* Experienced with C++ <!--[C++](/tags/c-plus-plus)-->
 * Experienced with [concurrent/asynchronous programming](/categories/concurrency)
-* High knowledge of [Sql](/tags/sql)
+* High knowledge of Sql <!--[Sql](/tags/sql)-->
 * Experienced with [Distributed Systems](/categories/distributed-systems)
 * The ability to write testable codes
 * Experienced with DevOps, CI/CD
