@@ -6,8 +6,6 @@ excerpt_separator: <!--more-->
 
 ![Cyber Lock Image](/assets/img/content/2020-08-07-distributed-lock/lock.jpg)
 
-![DotNET Banner](/assets/img/content/about/dotnet-standard-banner.png)
-
 In this article we're going to implement a highly available distributed lock so we can lock in multiple horizontally scaled
 application servers.
 <!--more-->
