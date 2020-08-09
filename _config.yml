@@ -28,7 +28,7 @@ github:
 twitter:
   username: amkherad            # change to your twitter username
 
-excerpt_separator: __MORE__
+excerpt_separator: "<!-- more -->"
 
 social:
   name: Ali Mousavi Kherad                  # it will shows as the copyright owner in Footer

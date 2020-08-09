@@ -5,5 +5,5 @@ excerpt_separator: __MORE__
 ---
 
 This article is about implementing a basic thread pool just to demonstrate how they're implemented.
-
+<!-- more -->
 **Work In Progress**

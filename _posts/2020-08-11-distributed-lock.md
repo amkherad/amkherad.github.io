@@ -1,7 +1,6 @@
 ---
 title: Distributed lock implementation
 categories: ["Distributed Systems"]
-excerpt_separator: <!--more-->
 ---
 
 ![Cyber Lock Image](/assets/img/content/2020-08-07-distributed-lock/lock.jpg)
@@ -9,7 +8,6 @@ excerpt_separator: <!--more-->
 In this article we're going to implement a highly available distributed lock so we can lock in multiple horizontally scaled
 application servers.
 <!--more-->
-
 
 ## The Problem
 Consider you want to make an online stock exchange application where many clients would connect to your servers,
