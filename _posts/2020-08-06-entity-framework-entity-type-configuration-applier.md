@@ -1,6 +1,6 @@
 ---
 title: Entity Framework - Automatic EntityTypeConfiguration registeration
-tags: entity-framework automatically register entity-type-configuration multi-context multiple db-context
+tags: ["entity-framework", entity-type-configuration, multi-context, db-context]
 categories: [DotNET, Entity Framework]
 ---
 
