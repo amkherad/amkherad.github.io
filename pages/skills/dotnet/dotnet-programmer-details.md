@@ -27,7 +27,7 @@ high performance code in run-time.
 * I use .NET for web API development, because I feel that it's the most suitable platform for developing APIs.
 * I learned to develop interpreters and compilers in .NET, it accually has a lot of features that will help you in text processing, like
     enumerables and lazy functions, or the most recent feature of [spans and memories](http://web.archive.org/save/https://docs.microsoft.com/en-us/archive/msdn-magazine/2018/january/csharp-all-about-span-exploring-a-new-net-mainstay).
-* I developed many custom protocols with dotnet. (e.g. [Yielded promise](/posts/yielded-response-in-web/))
+* I developed many custom protocols with dotnet. (e.g. yielded promise<!--[Yielded promise](/posts/yielded-response-in-web)-->)
 * The most enjoying software I made with .NET is PlaqueStudio, I developed this amazing AI application when I was just over 18 in
     my first startup company that I started with my friends. It was a full-featured parking automation system that was running in kiosk mode,
     accually I customized windows 8 and removed the userinit process and replaced my own user interface layer to prevent any kind of unwanted access to the system.  
