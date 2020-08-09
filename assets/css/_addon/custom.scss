@@ -1,0 +1,12 @@
+
+.flex-columns {
+    display: flex;
+    padding: 0;
+    margin: 0;
+
+    & > * {
+        flex-shrink: 1;
+        flex-grow: 1;
+        max-width:100%;
+    }
+}

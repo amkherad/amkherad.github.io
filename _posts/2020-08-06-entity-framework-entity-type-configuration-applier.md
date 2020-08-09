@@ -1,7 +1,7 @@
 ---
 excerpt_separator: __MORE__
-title: Entity Framework Core - Automatic EntityTypeConfiguration registeration
-tags: EntityFrameworkCore automatically register EntityTypeConfiguration multi-context multiple DbContext
+title: Entity Framework - Automatic EntityTypeConfiguration registeration
+tags: entity-framework automatically register entity-type-configuration multi-context multiple db-context
 categories: [DotNET, Entity Framework]
 ---
 

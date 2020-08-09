@@ -12,6 +12,9 @@
 @import "_colors/light-typography";
 @import "_colors/dark-typography";
 
+@import "_addon/custom.scss";
+
+
 @mixin set-visible($light-display, $dark-display) {
   [light-mode-invisible] {
     display: $light-display;

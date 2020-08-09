@@ -20,7 +20,7 @@ url: 'https://amkherad.ir'
 
 author: Ali Mousavi Kherad               # change to your full name
 
-#avatar: /assets/img/sample/avatar.jpg   # support internet resources
+avatar: /assets/img/avatar.jpg   # support internet resources
 
 github:
   username: amkherad             # change to your github username
