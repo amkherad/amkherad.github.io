@@ -1,13 +1,15 @@
 ---
 title: Distributed lock implementation
 categories: ["Distributed Systems"]
-excerpt_separator: __MORE__
+excerpt_separator: <!--more-->
 ---
 
 ![Cyber Lock Image](/assets/img/content/2020-08-07-distributed-lock/lock.jpg)
 
 In this article we're going to implement a highly available distributed lock so we can lock in multiple horizontally scaled
-application servers. __MORE__
+application servers.
+<!--more-->
+
 
 ## The Problem
 Consider you want to make an online stock exchange application where many clients would connect to your servers,
@@ -42,6 +44,8 @@ The minimum thing we require to implement a simple exclusive lock is the atomic 
 that a compare-and-swap is available.
 
 ```c++
+//C++
+
 volatile int isLock = 0;
 
 //compare_and_swap compares isLock to 0, if they are equal then it sets the
@@ -53,7 +57,7 @@ while (!compare_and_swap(&isLock, 0, 1)) {
 //Lock is acquired here.
 
 //And for unlocking simply set value of isLock to zero,
-//    but it's better to use a write/store lock to force
+//    but it's better to use a write barrier/fence to force
 //    the CPU to write data back to RAM asap and in order. [3]
 ```
 
@@ -64,6 +68,8 @@ in more complicated scenarios specially in distributed locks where network and o
 the lock user. 
 
 ```csharp
+//C#
+
 object lock1 = new object();
 object lock2 = new object();
 
@@ -121,8 +127,14 @@ But it can be source of many other problems, like what if a lock times-out witho
 and start working on the same transaction? in this case we could have integrity problems in the data. A fencing token would be an answer to this problem.
 
 
-## Fencing Tokens
+## Concurrency Tokens
+The opposite to pessimistic locks are optimistic locks. For instance you can have a concurrency field in your table so you could change the entity and
+when you want to commit the changes, check whether the entity has the previous concurrency token as you have in memory and if they are equal it's
+safe to commit, and if they are not equal you should rollback (and somehow handle the error). The same mechanism can be used in distributed locks.
 
+
+## Fencing Tokens
+Having utilized the lock timeout may cause problems, like what if an older lock times-out and 
 
 
 ## Redis As Lock Server
