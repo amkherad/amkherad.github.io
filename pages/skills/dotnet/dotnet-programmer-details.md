@@ -28,15 +28,3 @@ high performance code in run-time.
 * I learned to develop interpreters and compilers in .NET, it accually has a lot of features that will help you in text processing, like
     enumerables and lazy functions, or the most recent feature of [spans and memories](http://web.archive.org/save/https://docs.microsoft.com/en-us/archive/msdn-magazine/2018/january/csharp-all-about-span-exploring-a-new-net-mainstay).
 * I developed many custom protocols with dotnet. (e.g. yielded promise<!--[Yielded promise](/posts/yielded-response-in-web)-->)
-* The most enjoying software I made with .NET is PlaqueStudio, I developed this amazing AI application when I was just over 18 in
-    my first startup company that I started with my friends. It was a full-featured parking automation system that was running in kiosk mode,
-    accually I customized windows 8 and removed the userinit process and replaced my own user interface layer to prevent any kind of unwanted access to the system.  
-    * Every aspect of the system was modular, even the AI system was modular. (accually the core system was just an API for modules and a host window)
-    * The AI had a high accuracy, and was able to detect the cars using multiple factors.
-    * It was distributed, For instance you could have 2 monitoring systems and 10 gateway systems, and the processing could have been distributed among them.
-    * I developed an advanced error reporting system so it was able to collect information from systems without internet to a single node
-    with internet and send them to out server from that node.
-    * Here are some screenshots:
-        * [Plaque Studio 01](/assets/img/content/about/plaque-studio-01.png)
-        * [Plaque Studio 02](/assets/img/content/about/plaque-studio-02.png)
-        * [Plaque Studio 03](/assets/img/content/about/plaque-studio-03.png)
