@@ -12,7 +12,7 @@ Full-stack developer with 10+ years experience in making small to big applicatio
 * Experienced with [Distributed Systems](/categories/distributed-systems)
 * The ability to write testable codes
 * Experienced with DevOps, CI/CD
-* Experienced with ORMs (like [Entity Framework](/categories/entity-framework)<!-- or [TypeORM](/categories/typeorm)-->)
+* Experienced with ORMs (like [Entity Framework](/categories/entity-framework)<!--or [TypeORM](/categories/typeorm)--> )
 * Experienced with Docker and/or LXC
 * Experienced with Linux
 
