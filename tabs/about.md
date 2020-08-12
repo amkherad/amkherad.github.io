@@ -14,7 +14,7 @@ Full-stack developer with 10+ years experience in making small to big applicatio
 * Experienced with DevOps, CI/CD
 * Experienced with ORMs (like [Entity Framework](/categories/entity-framework)<!--or [TypeORM](/categories/typeorm)--> )
 * Experienced with Docker and/or LXC
-* Experienced with Linux
+* Experienced with Linux (ArchLinux/Ubuntu/CentOS/OpenSUSE)
 
 # Hobbies
 * I love making compilers
