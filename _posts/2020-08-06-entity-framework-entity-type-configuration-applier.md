@@ -5,7 +5,7 @@ categories: [DotNET, Entity Framework]
 ---
 
 In this article I'm going to create a simple helper class to automatically register all EntityTypeConfigurations in an assembly.
-<!-- more -->
+<!--more-->
 
 One way to organize entity framework's fluent configurations would be to put them in separate class that implements
 the `IEntityTypeConfiguration<TEntity>` interface. But with a growing application remembering to apply new configurations

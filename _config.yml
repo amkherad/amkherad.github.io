@@ -13,7 +13,8 @@ title: Ali Mousavi Kherad       # the main title
 tagline: My personal weblog about programming.  # it will display as the sub-title
 
 description: >-                        # used by seo meta and the atom feed
-  My personal weblog about programming.
+  Ali Mousavi Kherad personal weblog about programming.
+
 
 # Replace with the website url, e.g. 'https://username.github.io'
 url: 'https://amkherad.ir'
@@ -28,7 +29,7 @@ github:
 twitter:
   username: amkherad            # change to your twitter username
 
-excerpt_separator: "<!-- more -->"
+excerpt_separator: "<!--more-->"
 
 social:
   name: Ali Mousavi Kherad                  # it will shows as the copyright owner in Footer
