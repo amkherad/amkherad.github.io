@@ -1,7 +1,7 @@
 ---
 title: About
 ---
-Full-stack developer with 10+ years experience in making small to big applications and systems. Designed and developed over 10 advanced applications with unique functional requirements.
+Full-stack developer with 10+ years experience in making small to big applications and systems.
 
 # Skills
 * Highly skilled with [.NET Platform](/pages/skills/dotnet/dotnet-programmer-details)
@@ -14,7 +14,7 @@ Full-stack developer with 10+ years experience in making small to big applicatio
 * Experienced with DevOps, CI/CD
 * Experienced with ORMs (like [Entity Framework](/categories/entity-framework)<!--or [TypeORM](/categories/typeorm)--> )
 * Experienced with Docker and/or LXC
-* Experienced with Linux (ArchLinux/Ubuntu/CentOS/OpenSUSE)
+* Experienced with Linux (ArchLinux for personal use)
 
 # Hobbies
 * I love making compilers
