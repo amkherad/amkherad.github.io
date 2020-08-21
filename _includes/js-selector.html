@@ -10,7 +10,7 @@
 
   <script src="{{ '/assets/js/home.min.js' | relative_url }}" async></script>
 
-{% elsif page.layout == 'post' %}
+{% elsif page.layout == 'post' or page.layout == 'post-rtl' %}
 
   <script src="{{ '/assets/js/post.min.js' | relative_url }}" async></script>
 
@@ -20,7 +20,7 @@
     <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" async></script>
   {% endif %}
 
-{% elsif page.layout == 'page' %}
+{% elsif page.layout == 'page' or page.layout == 'page-rtl' %}
 
   {% if page.type == 'categories' %}
     <script src="{{ '/assets/js/categories.min.js' | relative_url }}" async></script>

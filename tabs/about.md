@@ -1,7 +1,14 @@
 ---
 title: About
 ---
-Full-stack developer with 10+ years experience in making small to big applications and systems.
+Full-stack developer with 10+ years of experience in making small to big applications and systems.
+I designed and implemented many softwares throughout these years including 20+ compilers,
+10+ full-stack frameworks in different environments. I began writing code when I was around 14,
+and the first piece of code I ever wrote was a very simple interpreter for C language in C!,
+when I was learning C language I tried to implement the simple functions that the book
+was using like `strlen`, then it turned into trying to parse and execute arithmetic expressions...,
+I didn't know what I'm doing back then, but now I know that the first code I wrote was an interpreter!
+
 
 # Skills
 * Highly skilled with [.NET Platform](/pages/skills/dotnet/dotnet-programmer-details)
@@ -12,7 +19,7 @@ Full-stack developer with 10+ years experience in making small to big applicatio
 * Experienced with [Distributed Systems](/categories/distributed-systems)
 * The ability to write testable codes
 * Experienced with DevOps, CI/CD
-* Experienced with ORMs (like [Entity Framework](/categories/entity-framework)<!--or [TypeORM](/categories/typeorm)--> )
+* Experienced with ORMs (e.g. [Entity Framework](/categories/entity-framework)<!--or [TypeORM](/categories/typeorm)-->)
 * Experienced with Docker and/or LXC
 * Experienced with Linux (ArchLinux for personal use)
 
@@ -39,6 +46,10 @@ Full-stack developer with 10+ years experience in making small to big applicatio
 * Introduction to Algorithms (Thomas H. Cormen,...)
 * Introduction to Parallel Processing
 
+# Languages
+* Persian (Native Language)
+* English (IELTS)
+
 # Social Media
 * [stackoverflow.com/users/2467152/ali-mousavi-kherad](https://stackoverflow.com/users/2467152/ali-mousavi-kherad?tab=profile)
 * [github.com/amkherad](https://github.com/amkherad)
@@ -58,3 +69,5 @@ Full-stack developer with 10+ years experience in making small to big applicatio
         title="profile for Ali Mousavi Kherad at Stack Overflow, Q&amp;A for professional and enthusiast programmers"
         />
 </a>
+
+[رزومه به زبان فارسی](/pages/resume-fa/)
