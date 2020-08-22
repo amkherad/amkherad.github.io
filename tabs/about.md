@@ -6,8 +6,9 @@ I designed and implemented many softwares throughout these years including 20+ c
 10+ full-stack frameworks in different environments. I began writing code when I was around 14,
 and the first piece of code I ever wrote was a very simple interpreter for C language in C!,
 when I was learning C language I tried to implement the simple functions that the book
-was introducing (like `strlen`), then it turned into trying to parse and execute arithmetic expressions and very soon I was trying to "interpret" all the previous codes I've been writing,
-I didn't know what I'm doing back then, but now I know that the first code I wrote was an interpreter!
+was introducing (like `strlen`), then it turned into trying to parse and execute arithmetic
+expressions and very soon I was trying to "interpret" all the previous codes I've been writing,
+I didn't know what was doing back then, but now I know that the first code I wrote was an interpreter!
 
 
 # Skills
