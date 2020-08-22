@@ -5,7 +5,7 @@ layout: page
 
 ![DotNET Banner](/assets/img/content/about/dotnet-standard-banner.jpg)
 
-I'm developing applications using  .NET for over 10 years now. The variety of applications I made with .NET are
+I'm developing applications using .NET for over 10 years now. The variety of applications I made with .NET are
 from small tools to distributed systems. I developed WinForm applications, WPF and Xamarin applications, and most importantly web applications using dotnet.
 It's my main platform so I love it.
 
