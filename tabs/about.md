@@ -8,7 +8,7 @@ and the first piece of code I ever wrote was a very simple interpreter for C lan
 when I was learning C language I tried to implement the simple functions that the book
 was introducing (like `strlen`), then it turned into trying to parse and execute arithmetic
 expressions and very soon I was trying to "interpret" all the previous codes I've been writing,
-I didn't know what was doing back then, but now I know that the first code I wrote was an interpreter!
+I didn't know what I was doing back then, but now I know that the first code I wrote was an interpreter!
 
 
 # Skills
