@@ -71,4 +71,6 @@ I didn't know what was doing back then, but now I know that the first code I wro
         />
 </a>
 
+<!-- 
 [رزومه به زبان فارسی](/pages/resume-fa/)
+-->
