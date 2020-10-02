@@ -33,7 +33,7 @@ I didn't know what I was doing back then, but now I know that the first code I w
     * [Payame Noor University - Tehran-Shomal](http://teh-shomal.pnu.ac.ir/), Tehran
     * February 2020 to Present
 * Bachelor's degree in IT (Web Programming)
-    * [University of Applied Science and Technolog - Dade Pardazi (aka IBM)](http://www.dpicollege.ir/), Tehran
+    * [University of Applied Science and Technology - Dade Pardazi (aka IBM)](http://www.dpicollege.ir/), Tehran
     * January 2015 to September, 2018
 * Higher Diploma non-continuous educational course in Computer Software
     * [Technical and Vocational University - Shamsipour](https://shamsipour.tvu.ac.ir/), Tehran
