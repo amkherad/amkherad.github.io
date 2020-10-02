@@ -7,8 +7,6 @@ tags: partial-update
 In this article we're going to implement a partial-update mechanism for our CRUD APIs so we could benefit from its merits.
 <!--more-->
 
-* the problems
-* how to implement
 
 ## What is update and what are it's drawbacks?
 Before we begin, we better understand what partial update is and what advantages it has.  
