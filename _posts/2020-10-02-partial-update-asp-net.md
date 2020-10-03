@@ -203,7 +203,8 @@ public virtual async Task<BaseResponseDto<TCrudDto>> UpdatePartialAsync(
     CancellationToken cancellationToken
 )
 {
-    return await CrudService.PartialUpdateAsync(publicId, values.Properties, values.Model, cancellationToken);
+    return await CrudService.PartialUpdateAsync(
+        publicId, values.Properties, values.Model, cancellationToken);
     // Or you could pass down (e.g. dispatch) the PartialUpdateDto itself.
 }
 ```
@@ -303,7 +304,8 @@ public virtual async Task<TCrudDto> PartialUpdateAsync(
             .GetProperties(BindingFlags.Public | BindingFlags.SetProperty | BindingFlags.Instance)
             .ToDictionary(k => k.Name, v => v);
 
-        var typeMap = Mapper.ConfigurationProvider.FindTypeMapFor(typeof(TCrudDto), typeof(TEntity));
+        var typeMap = Mapper.ConfigurationProvider.FindTypeMapFor(
+            typeof(TCrudDto), typeof(TEntity));
 
         var propertyMaps = typeMap.MemberMaps.ToDictionary(
             k => k.SourceMember?.Name?.ToLower(),
