@@ -189,11 +189,6 @@ services.AddControllers() //It's in your Startup.ConfigureServices method
     .AddJsonOptions(opt =>
     {
         RegisterPartialUpdateDto(opt.JsonSerializerOptions, typeof(Startup).Assembly);
-
-        opt.JsonSerializerOptions.Converters.Add(new DecimalJsonConverter());
-        opt.JsonSerializerOptions.Converters.Add(
-            new LocalDateTimeOffsetJsonConverter()
-        );
     });
 ```
 
