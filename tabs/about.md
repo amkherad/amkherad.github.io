@@ -50,6 +50,7 @@ I didn't know what I was doing back then, but now I know that the first code I w
 # Languages
 * Persian (Native Language)
 * English (IELTS)
+* German (Elementary)
 
 # Social Media
 * [stackoverflow.com/users/2467152/ali-mousavi-kherad](https://stackoverflow.com/users/2467152/ali-mousavi-kherad?tab=profile)
