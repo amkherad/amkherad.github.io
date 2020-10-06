@@ -21,7 +21,7 @@ This classical approach has many downsides such as:
 * It is not thread-safe, which means, during the altering phase other clients might update the data, so state of the data is no longer valid and clients may not see the latest state of data/objects.
 * Subsequent changes to structure of the data may break the clients, and they have to update their models to use new API versions. Because the update requires a full state of data. This will lead to many API versions with a small change to their model.
 
-There is no magic bullet to avoid these three phases (read, modify, write), so these problems always exist, but we could bring them closer to each other by instead of forcing client to read-modify-write, the server (the update endpoint) takes the responsibility to handle these three phases, specially bearing in mind, server MUST perform such operations one way or another to check for data integrity (i.e. concurrency/fencing tokens).
+There is no magic bullet to avoid these three phases (read, modify, write), so these problems always exist, but we could bring them closer to each other and instead of forcing client to read-modify-write, the server (the update endpoint) takes the responsibility to handle these three phases, specially bearing in mind, server MUST perform such operations one way or another to check for data integrity (i.e. concurrency/fencing tokens).
 N.B. This is only a remedy for situations where we want to allow force-replacing the data, using partial update for this purpose is not thread-safe, so it's not recommended.
 
 Also, the main problem (i.e. clients have to provide a full state of the data) could be eliminated if we allow clients to provide only the portion of the data they want to modify.
