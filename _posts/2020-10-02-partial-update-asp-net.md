@@ -128,48 +128,38 @@ public void RegisterPartialUpdateDto(
     Assembly assembly
 )
 {
-    var baseControllerType = typeof(ControllerBase);
-
-    // This function finds a PartialUpdateDto<XX> in type hierarchy or returns null.
-    Type GetPartialUpdateDto(
-        Type t
-    )
-    {
-        var that = t;
-
-        do {
-            if (!that.IsGenericType)
-            {
-                continue;
-            }
-
-            if (typeof(PartialUpdateDto<>) == that.GetGenericTypeDefinition())
-            {
-                return that;
-            }
-            
-        } while ((that = that.BaseType) != null);
-
-        return null;
-    }
-
-    var partialUpdateDtoList = assembly.GetTypes()
-        .Where(t => !t.IsGenericType && typeof(ControllerBase).IsAssignableFrom(t))
-        .SelectMany(t =>
+    var controllers = assembly.GetTypes()
+        .Where(t =>
         {
-            return t
-                .GetMethods(BindingFlags.Public | BindingFlags.Instance)
-                .Select(m => m.GetParameters())
-                .Where(p => !(p is null) && p.Any())
-                .SelectMany(p => p)
-                .Select(p => GetPartialUpdateDto(p))
-                .Where(p => !(p is null))
-                .Select(p => 
-                    typeof(PartialUpdateDtoJsonConverter<>)
-                        .MakeGenericType(p)
+            return t.GetCustomAttributes()
+                .Any(attr => attr is ApiControllerAttribute);
+        });
+
+
+    var partialUpdateDtoList = controllers.SelectMany(
+            ctl => ctl.GetMethods(BindingFlags.Public | BindingFlags.Instance)
+        )
+        .SelectMany(t =>
+            t.GetParameters()
+                .Select(p =>
+                    {
+                        var pType = p.ParameterType;
+                        if (!pType.IsGenericType) return null;
+
+                        var gTypes = pType.GetGenericTypeDefinition();
+
+                        if (gTypes == typeof(PartialUpdateDto<>))
+                        {
+                            return pType.GenericTypeArguments[0];
+                        }
+
+                        return null;
+                    }
                 )
-            ;
-        }).ToArray();
+        )
+        .Where(t => !(t is null))
+        .Select(t => typeof(PartialUpdateDtoJsonConverter<>).MakeGenericType(t))
+        .ToArray();
 
     foreach (var converterType in partialUpdateDtoList)
     {
