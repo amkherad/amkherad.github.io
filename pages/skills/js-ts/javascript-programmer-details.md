@@ -1,5 +1,6 @@
 ---
 title: Javascript Programmer Detailed Resume
+permalink: /javascript-programmer-resume/
 layout: page
 ---
 

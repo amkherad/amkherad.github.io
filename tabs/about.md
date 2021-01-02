@@ -12,8 +12,8 @@ I didn't know what I was doing back then, but now I know that the first code I w
 
 
 # Skills
-* Highly skilled with [.NET Platform](/pages/skills/dotnet/dotnet-programmer-details)
-* Highly skilled with [Javascript Stack](/pages/skills/js-ts/javascript-programmer-details)
+* Highly skilled with [.NET Platform](/dotnet-programmer-resume)
+* Highly skilled with [Javascript Stack](/javascript-programmer-resume)
 * Experienced with C++ <!--[C++](/tags/c-plus-plus)-->
 * Experienced with [concurrent/asynchronous programming](/categories/concurrency)
 * High knowledge of Sql <!--[Sql](/tags/sql)-->
@@ -50,7 +50,7 @@ I didn't know what I was doing back then, but now I know that the first code I w
 # Languages
 * Persian (Native Language)
 * English (IELTS)
-* German (Elementary)
+* German (A2)
 
 # Social Media
 * [stackoverflow.com/users/2467152/ali-mousavi-kherad](https://stackoverflow.com/users/2467152/ali-mousavi-kherad?tab=profile)
@@ -58,7 +58,7 @@ I didn't know what I was doing back then, but now I know that the first code I w
 * [linkedin.com/in/ali-mousavi-kherad-b5b2a357](https://www.linkedin.com/in/ali-mousavi-kherad-b5b2a357/)
 * [twitter.com/amkherad](https://twitter.com/amkherad)
 * [telegram.me/asdf_SHESIB](https://t.me/asdf_SHESIB)
-* [PlayStation](https://my.playstation.com/profile/AMKdp)
+* [PlayStation (psnprofiles)](https://psnprofiles.com/AMKdp)
 
 ---
 
@@ -73,5 +73,5 @@ I didn't know what I was doing back then, but now I know that the first code I w
 </a>
 
 <!-- 
-[رزومه به زبان فارسی](/pages/resume-fa/)
+[رزومه به زبان فارسی](/tabs/about/fa/)
 -->

@@ -1,5 +1,6 @@
 ---
 title: .NET Programmer Detailed Resume
+permalink: /dotnet-programmer-resume/
 layout: page
 ---
 
