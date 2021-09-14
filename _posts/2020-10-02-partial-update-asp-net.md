@@ -8,7 +8,7 @@ In this article we're going to implement a partial-update mechanism for our CRUD
 <!--more-->
 
 
-## What is update and what are it's drawbacks?
+## What is update and what are its drawbacks?
 Before we begin, we better understand what partial update is and what advantages it has.  
 Well, lets begin by explaining how we should update without partial update. To update data, we have to fetch it first, and then we could alter it (e.g. increment), and finally we may want to replace old value with the new value:
 ```csharp
