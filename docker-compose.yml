@@ -1,0 +1,15 @@
+version: '3.5'
+
+services:
+  amkherad.ir.github.io:
+    container_name: amkherad.ir.github.io
+    image: "amkherad.ir.github.io:latest"
+    restart: unless-stopped
+    networks:
+      home_server_net:
+        aliases:
+          - amkherad.ir.github.io
+
+networks:
+  home_server_net:
+    external: true

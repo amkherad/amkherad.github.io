@@ -1,0 +1,7 @@
+version: '3.5'
+
+services:
+  amkherad.ir.github.io:
+    build:
+      context: .
+      dockerfile: ./Dockerfile

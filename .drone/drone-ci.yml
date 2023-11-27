@@ -1,0 +1,25 @@
+kind: pipeline
+type: docker
+name: default
+
+steps:
+- name: deploy services
+  image: docker/compose
+  volumes:
+    - name: dockersock
+      path: /var/run/docker.sock
+  environment:
+    DOCKER_BUILDKIT: 1
+  commands:
+  - docker-compose -p amkherad.ir.github.io -f docker-compose.yml -f docker-compose.build.yml build
+  - docker-compose -p amkherad.ir.github.io -f docker-compose.yml up -d --remove-orphans
+  when:
+    branch: main
+
+volumes:
+  - name: dockersock
+    host:
+      path: /var/run/docker.sock
+  - name: ruby_cache
+    host:
+      path: /home/amk/cache/ruby/gems
