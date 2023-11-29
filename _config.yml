@@ -9,13 +9,45 @@ description: >- # used by seo meta and the atom feed
   Ali Mousavi Kherad personal weblog about programming.
 
 name: Ali Mousavi Kherad
-author: Ali Mousavi Kherad
 url: "https://amkherad.ir"
 repository: amkherad/amkherad.github.io
 logo: /assets/img/avatar.jpg # support internet resources
 # words_per_minute: 200
 # masthead_title           : "Custom Title" # overrides the website title displayed in the masthead, use " " for no title
 # breadcrumbs            : false # true, false (default)
+
+# Site Author
+author:
+  name             : "Ali Mousavi Kherad"
+  avatar           : "/assets/img/avatar.jpg"
+  bio              : "A computer nerd."
+  location         : "Tehran"
+  links:
+    - label: "My Website"
+      icon: "fas fa-fw fa-link"
+      url: "https://amkherad.ir"
+    - label: "Twitter"
+      icon: "fab fa-fw fa-twitter-square"
+      url: "https://twitter.com/amkherad"
+    - label: "GitHub"
+      icon: "fab fa-fw fa-github"
+      url: "https://github.com/amkherad"
+    - label: "Instagram"
+      icon: "fab fa-fw fa-instagram"
+      url: "https://instagram.com/amkherad"
+
+# Site Footer
+footer:
+  links:
+    - label: "Twitter"
+      icon: "fab fa-fw fa-twitter-square"
+      url: "https://twitter.com/amkherad"
+    - label: "GitHub"
+      icon: "fab fa-fw fa-github"
+      url: "https://github.com/amkherad"
+    - label: "Instagram"
+      icon: "fab fa-fw fa-instagram"
+      url: "https://instagram.com/amkherad"
 
 
 lang: "fa"
@@ -40,24 +72,10 @@ paginate_path: /page:num/
 markdown: kramdown
 highlighter: rouge
 
-
-github:
-  username: amkherad # change to your github username
-
-twitter:
-  username: amkherad # change to your twitter username
-
-
-social:
-  name: Ali Mousavi Kherad # it will shows as the copyright owner in Footer
-  email: alimousavikherad@outlook.com # change to your email address
-  links:
-    # The first element serves as the copyright owner's link
-    - https://twitter.com/amkherad # change to your twitter homepage
-    - https://github.com/amkherad # change to your github homepage
-    # Uncomment below to add more social links
-    - https://www.facebook.com/username
-    - https://www.linkedin.com/in/username
+# Liquid
+strict_front_matter: true
+liquid:
+  error_mode: strict
 
 google_site_verification: google_meta_tag_verification # change to your verification string
 
