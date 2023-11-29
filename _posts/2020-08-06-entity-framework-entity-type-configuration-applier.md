@@ -1,4 +1,5 @@
 ---
+layout: post
 title: Entity Framework - Automatic EntityTypeConfiguration registeration
 tags: ["entity-framework", entity-type-configuration, multi-context, db-context]
 categories: [DotNET, Entity Framework]

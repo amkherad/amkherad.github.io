@@ -1,4 +1,5 @@
 ---
+layout: post
 title: Partial update in ASP.net
 categories: [DotNET, ASP.net]
 tags: partial-update
