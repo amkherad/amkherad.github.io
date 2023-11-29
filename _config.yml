@@ -9,12 +9,11 @@
 #--------------------------
 
 title: علی موسوی خرد       # the main title
-
 tagline: محتوای برنامه‌نویسی به زبان فارسی  # it will display as the sub-title
-
 description: >-                        # used by seo meta and the atom feed
   Ali Mousavi Kherad personal weblog about programming.
 
+lang: [fa]
 
 # Replace with the website url, e.g. 'https://username.github.io'
 url: 'https://amkherad.ir'
@@ -22,8 +21,6 @@ url: 'https://amkherad.ir'
 author: Ali Mousavi Kherad               # change to your full name
 
 avatar: /assets/img/avatar.jpg   # support internet resources
-
-lang: fa
 
 remote_theme: rundocs/jekyll-rtd-theme
 
