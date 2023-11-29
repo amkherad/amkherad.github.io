@@ -1,10 +1,14 @@
 # syntax = docker/dockerfile:1.2
 FROM jekyll/jekyll AS builder
 
+USER 1000
+
 WORKDIR /src
 
 COPY "/Gemfile" "."
 COPY "/Gemfile.lock" "."
+
+RUN mkdir _site
 
 # Install Gems
 RUN bundle install
