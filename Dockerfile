@@ -1,23 +1,7 @@
 # syntax = docker/dockerfile:1.2
-FROM ruby:3.2.2 AS builder
-ENV BUNDLE_PATH=/bundler
+FROM jekyll/jekyll AS builder
 
 WORKDIR /src
-
-# Install Basics
-RUN apt-get update \
-  && apt-get install -y \
-    ca-certificates \
-    nodejs \
-    build-essential \
-    npm \
-    ncftp \
-  && apt-get clean \
-  && rm -rf /var/lib/apt/lists/*
-
-RUN gem install bundle jekyll
-
-RUN npm install -g gh
 
 COPY "/Gemfile" "."
 COPY "/Gemfile.lock" "."
@@ -26,8 +10,6 @@ COPY "/Gemfile.lock" "."
 RUN bundle install
 
 COPY . .
-
-ENV PATH="${PATH}:$HOME/gems/bin"
 
 RUN bundle exec jekyll build
 
