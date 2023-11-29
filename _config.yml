@@ -14,6 +14,7 @@ description: >-                        # used by seo meta and the atom feed
   Ali Mousavi Kherad personal weblog about programming.
 
 lang: [fa]
+locale: fa-IR
 
 # Replace with the website url, e.g. 'https://username.github.io'
 url: 'https://amkherad.ir'
@@ -22,7 +23,7 @@ author: Ali Mousavi Kherad               # change to your full name
 
 avatar: /assets/img/avatar.jpg   # support internet resources
 
-remote_theme: rundocs/jekyll-rtd-theme
+remote_theme: mmistakes/minimal-mistakes
 
 github:
   username: amkherad             # change to your github username
@@ -50,6 +51,8 @@ google_site_verification: google_meta_tag_verification # change to your verifica
 addons:
   - plugins
 
+plugins:
+  - jekyll-include-cache
 
 # Only if your site type is GitHub Project sites and doesn't have a custom domain,
 # change below value to '/projectname'.
