@@ -23,7 +23,7 @@ author: Ali Mousavi Kherad               # change to your full name
 
 avatar: /assets/img/avatar.jpg   # support internet resources
 
-remote_theme: mmistakes/minimal-mistakes
+remote_theme: "mmistakes/minimal-mistakes@4.24.0"
 
 github:
   username: amkherad             # change to your github username
@@ -86,7 +86,7 @@ disqus:
 #
 #     dark   - Use the dark color scheme
 #
-theme_mode: dark
+# theme_mode: dark
 
 # boolean type, global switch for ToC in posts.
 toc: true
