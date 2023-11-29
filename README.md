@@ -1,2 +1,3 @@
+* Ali Mousavi Kherad's Personal Blog
 
-[Chirpy theme](https://github.com/cotes2020/jekyll-theme-chirpy)
+Go to my [website](https://amkherad.ir)
