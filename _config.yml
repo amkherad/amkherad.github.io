@@ -13,8 +13,8 @@ tagline: محتوای برنامه‌نویسی به زبان فارسی  # it w
 description: >-                        # used by seo meta and the atom feed
   Ali Mousavi Kherad personal weblog about programming.
 
-lang: [fa]
-locale: fa-IR
+lang: "fa"
+locale: "fa"
 
 # Replace with the website url, e.g. 'https://username.github.io'
 url: 'https://amkherad.ir'
