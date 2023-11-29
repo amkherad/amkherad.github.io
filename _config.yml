@@ -25,7 +25,7 @@ avatar: /assets/img/avatar.jpg   # support internet resources
 
 lang: fa
 
-remote_theme: cotes2020/jekyll-theme-chirpy
+remote_theme: rundocs/jekyll-rtd-theme
 
 github:
   username: amkherad             # change to your github username
