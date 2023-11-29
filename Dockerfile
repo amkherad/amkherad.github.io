@@ -1,7 +1,6 @@
-# syntax = docker/dockerfile:1.2
 FROM jekyll/jekyll AS builder
 
-USER 1000
+USER 0
 
 WORKDIR /src
 
@@ -10,12 +9,16 @@ COPY "/Gemfile.lock" "."
 
 RUN mkdir _site
 
+RUN chmod -R o+rw /src
+
 # Install Gems
 RUN bundle install
 
-COPY --chown=jekyll . .
+COPY . .
 
-RUN bundle exec jekyll build
+RUN chmod -R o+rw /src
+
+RUN bundle exec jekyll build --trace
 
 # Fetching the latest nginx image
 FROM nginx:latest
