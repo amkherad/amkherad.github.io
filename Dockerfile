@@ -1,7 +1,7 @@
 # syntax = docker/dockerfile:1.2
 FROM jekyll/jekyll AS builder
 
-USER 0
+USER 1000
 
 WORKDIR /src
 
@@ -13,7 +13,7 @@ RUN mkdir _site
 # Install Gems
 RUN bundle install
 
-COPY . .
+COPY --chown=jekyll . .
 
 RUN bundle exec jekyll build
 
