@@ -4,6 +4,7 @@
 # jekyll debug
 _site
 .jekyll-cache
+.sass-cache
 
 
 # Jeykll Gemfile.lock

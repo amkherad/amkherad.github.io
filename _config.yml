@@ -1,4 +1,4 @@
-remote_theme: "bitbrain/jekyll-dash"
+remote_theme: "minimal-mistakes-jekyll"
 # theme: "minimal-mistakes-jekyll"
 
 # wether to enable Right-to-Left support or not
