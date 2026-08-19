@@ -1,42 +1,54 @@
 ---
-title: Partial update in ASP.net
+title: Partial Update in ASP.NET
+description: Implement PATCH-style partial updates in ASP.NET Core by tracking which JSON properties were sent, with AutoMapper integration.
 categories: [DotNET, ASP.net]
-tags: partial-update
+tags: [partial-update]
 ---
 
-In this article we're going to implement a partial-update mechanism for our CRUD APIs so we could benefit from its merits.
+REST APIs often expose `PUT` for full replacement and `PATCH` for partial updates. With `PUT`, clients must send the entire resource state—even for a one-field change. That forces an extra read, increases payload size, and makes API evolution painful: a new required field on the server can break older clients until they adopt a new API version.
+
+A partial-update endpoint lets clients send only the fields they want to change. The server still performs read–modify–write internally (there is no way around that for durable storage), but the contract becomes smaller and more resilient.
+
+This post walks through a practical `PATCH` implementation for ASP.NET Core using `System.Text.Json`, including AutoMapper support.
+
 <!--more-->
 
+## Full update and its drawbacks
 
-## What is update and what are its drawbacks?
-Before we begin, we better understand what partial update is and what advantages it has.  
-Well, lets begin by explaining how we should update without partial update. To update data, we have to fetch it first, and then we could alter it (e.g. increment), and finally we may want to replace old value with the new value:
+The classic client-driven update looks like this:
+
 ```csharp
-var value1 = read();
-value1 ++;
-write(value1);
+var value = Read();
+value++;
+Write(value);
 ```
-This classical approach has many downsides such as:
-* Every client (user) has to provide a full state of the object for the update endpoint, meaning they all have to read the data before updating.
-* It is not thread-safe, which means, during the altering phase other clients might update the data, so state of the data is no longer valid and clients may not see the latest state of data/objects.
-* Subsequent changes to structure of the data may break the clients, and they have to update their models to use new API versions. Because the update requires a full state of data. This will lead to many API versions with a small change to their model.
 
-There is no magic bullet to avoid these three phases (read, modify, write), so these problems always exist, but we could bring them closer to each other and instead of forcing client to read-modify-write, the server (the update endpoint) takes the responsibility to handle these three phases, specially bearing in mind, server MUST perform such operations one way or another to check for data integrity (i.e. concurrency/fencing tokens).
-N.B. This is only a remedy for situations where we want to allow force-replacing the data, using partial update for this purpose is not thread-safe, so it's not recommended.
+Problems with requiring a full resource representation:
 
-Also, the main problem (i.e. clients have to provide a full state of the data) could be eliminated if we allow clients to provide only the portion of the data they want to modify.
+- **Extra round trip** — Clients must `GET` before `PUT`, even to change one property.
+- **Lost updates** — Two clients can read the same version, modify different fields, and whichever writes last wins; the other change is silently overwritten.
+- **Brittle contracts** — Adding or renaming server-side properties can break clients that must always send a complete object.
 
+Partial update does not remove read–modify–write on the server; it moves that work behind a narrower API surface. For force-replace semantics, `PUT` with optimistic concurrency is still the right tool.
+
+> **Note:** If you only need a standard, library-supported format, consider [JSON Patch (RFC 6902)](https://datatracker.ietf.org/doc/html/rfc6902) via `Microsoft.AspNetCore.JsonPatch`. The approach below is useful when you want plain JSON bodies (`{ "name": "Ali" }`) and explicit control over which properties were present in the request.
 
 ## Concurrency
-In concurrent systems where parallel updates could cause problems, we could take them out by providing a concurrency token, which considered an [optimistic concurrency control](https://en.wikipedia.org/wiki/Optimistic_concurrency_control). Likewise in partial update we could provide a concurrency token to prevent parallel updates optimistically.
 
+In concurrent environments, pair updates with a concurrency token (ETag, row version, or similar) for [optimistic concurrency control](https://en.wikipedia.org/wiki/Optimistic_concurrency_control). The partial-update flow is the same as for full updates: read the entity including its token, apply changes, and fail the write if the token no longer matches. The DTO and property-tracking mechanics in this post are independent of how you store and validate that token.
 
-## Implementation
-In case of full-update when we have the entire object, we could fill a model with the given values and pass it to the repository or whatever you're using for updates.
-But in case of partial-update, mechanism for handling partial-update in lower levels should receive information about fields and their value to update, we couldn't just pass the model, because not all the fields have been updated.
+## Implementation overview
+
+For a full update, model binding gives you a complete DTO. For partial update, the service layer also needs to know **which** properties appeared in the JSON payload—not just their values (a missing property and an explicit `null` are different concerns, and only sent fields should be applied).
+
+The pattern:
+
+1. Deserialize the body into `PartialUpdateDto<T>`.
+2. Track property names from the raw JSON.
+3. Apply only those properties to the persisted entity.
 
 ### PartialUpdateDto
-To implement partial-update in ASP.net I'm of the opinion that we need a model to contain the DTO and a list of the properties which have been updated.
+
 ```csharp
 public class PartialUpdateDto<T>
 {
@@ -45,171 +57,135 @@ public class PartialUpdateDto<T>
     public HashSet<string> Properties { get; set; }
 }
 ```
-Then we could simply take this model instead of the update/command model itself, and with a little configuration we could have the model and updated properties.
+
+Controller actions accept `PartialUpdateDto<TCrudDto>` instead of `TCrudDto` directly.
 
 ### PartialUpdateDtoJsonConverter
-The configuration could vary depending on the libraries you're using. For me, I'm using `System.Text.Json` for serialization, so to allow mapping to this model we need a custom `JsonConverter`, I use the following code, but it depends on internal implementation so be carefull about using it.
+
+`System.Text.Json` does not tell you which properties were present in the payload after deserialization. A custom converter records property names while building the model. Using `JsonDocument` avoids relying on internal `Utf8JsonReader` APIs:
+
 ```csharp
-//A delegate type to provide access to internal span in an `Utf8JsonReader` type.
-internal delegate ReadOnlySpan<byte> Utf8JsonReaderSpanAccessorDelegate(
-    Utf8JsonReader reader
-);
+using System;
+using System.Collections.Generic;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 
 public class PartialUpdateDtoJsonConverter<T> : JsonConverter<PartialUpdateDto<T>>
 {
-    //A function to provide access to internal span in an `Utf8JsonReader` type.
-    private static readonly Utf8JsonReaderSpanAccessorDelegate OriginalSpanAccessor;
-
-    //Static constructor to initialize the OriginalSpanAccessor.
-    //This method is unsafe, and I will replace it with a better implementation ASAP.
-    static PartialUpdateDtoJsonConverter()
-    {
-        var property = typeof(Utf8JsonReader)
-            .GetProperty("OriginalSpan", BindingFlags.GetProperty | BindingFlags.NonPublic |
-                BindingFlags.Public | BindingFlags.Instance | BindingFlags.Static);
-
-        var param = Expression.Parameter(typeof(Utf8JsonReader));
-        var memberAccess = Expression.Property(param, property);
-
-        var lambda = Expression.Lambda<Utf8JsonReaderSpanAccessorDelegate>(memberAccess, param);
-
-        OriginalSpanAccessor = lambda.Compile();
-    }
-
-
     public override PartialUpdateDto<T> Read(
         ref Utf8JsonReader reader,
         Type typeToConvert,
-        JsonSerializerOptions options
-    )
+        JsonSerializerOptions options)
     {
-        var span = OriginalSpanAccessor(reader);
+        using var document = JsonDocument.ParseValue(ref reader);
+        var properties = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
 
-        var originalBytes = span;
-
-        var fields = new HashSet<string>();
-        var jObj = new Utf8JsonReader(originalBytes);
-
-        var obj = JsonSerializer.Deserialize<T>(ref reader, options);
-
-        while (jObj.Read())
+        foreach (var property in document.RootElement.EnumerateObject())
         {
-            if (jObj.CurrentDepth == 1 && jObj.TokenType == JsonTokenType.PropertyName)
-            {
-                fields.Add(Encoding.UTF8.GetString(jObj.ValueSpan));
-            }
+            properties.Add(property.Name);
         }
 
-        return  new PartialUpdateDto<T>
+        var model = document.RootElement.Deserialize<T>(options);
+
+        return new PartialUpdateDto<T>
         {
-            Model = obj,
-            Fields = fields
+            Model = model,
+            Properties = properties
         };
     }
 
     public override void Write(
         Utf8JsonWriter writer,
         PartialUpdateDto<T> value,
-        JsonSerializerOptions options
-    )
+        JsonSerializerOptions options)
     {
-        throw new NotImplementedException();
+        JsonSerializer.Serialize(writer, value.Model, options);
     }
 }
 ```
-After adding this class we need to register each model that is wrapped with `PartialUpdateDto`, in `JsonSerializerOptions`.
+
+Register the converter for each DTO type used in partial-update actions (see below).
 
 ### RegisterPartialUpdateDto
-This method could be usefull, but it's up to you and your softwares' structure to find the most suitable way to register them.
+
+Scan controllers for `PartialUpdateDto<>` parameters and register converters automatically:
 
 ```csharp
-public void RegisterPartialUpdateDto(
-    JsonSerializerOptions opt,
-    Assembly assembly
-)
+using System;
+using System.Linq;
+using System.Reflection;
+using System.Text.Json.Serialization;
+using Microsoft.AspNetCore.Mvc;
+
+public static class PartialUpdateDtoRegistration
 {
-    var controllers = assembly.GetTypes()
-        .Where(t =>
-        {
-            return t.GetCustomAttributes()
-                .Any(attr => attr is ApiControllerAttribute);
-        });
-
-
-    var partialUpdateDtoList = controllers.SelectMany(
-            ctl => ctl.GetMethods(BindingFlags.Public | BindingFlags.Instance)
-        )
-        .SelectMany(t =>
-            t.GetParameters()
-                .Select(p =>
-                    {
-                        var pType = p.ParameterType;
-                        if (!pType.IsGenericType) return null;
-
-                        var gTypes = pType.GetGenericTypeDefinition();
-
-                        if (gTypes == typeof(PartialUpdateDto<>))
-                        {
-                            return pType.GenericTypeArguments[0];
-                        }
-
-                        return null;
-                    }
-                )
-        )
-        .Where(t => !(t is null))
-        .Select(t => typeof(PartialUpdateDtoJsonConverter<>).MakeGenericType(t))
-        .ToArray();
-
-    foreach (var converterType in partialUpdateDtoList)
+    public static void RegisterPartialUpdateDto(
+        JsonSerializerOptions options,
+        Assembly assembly)
     {
-        var instance = Activator.CreateInstance(converterType);
-        if (instance is JsonConverter jsonConverter)
+        var dtoTypes = assembly.GetTypes()
+            .Where(t => t.GetCustomAttributes().Any(a => a is ApiControllerAttribute))
+            .SelectMany(t => t.GetMethods(BindingFlags.Public | BindingFlags.Instance))
+            .SelectMany(m => m.GetParameters())
+            .Select(p => p.ParameterType)
+            .Where(t => t.IsGenericType &&
+                        t.GetGenericTypeDefinition() == typeof(PartialUpdateDto<>))
+            .Select(t => t.GetGenericArguments()[0])
+            .Distinct();
+
+        foreach (var dtoType in dtoTypes)
         {
-            opt.Converters.Add(jsonConverter);
+            var converterType = typeof(PartialUpdateDtoJsonConverter<>).MakeGenericType(dtoType);
+            if (Activator.CreateInstance(converterType) is JsonConverter converter)
+            {
+                options.Converters.Add(converter);
+            }
         }
     }
 }
 ```
 
-Then we should call this method and apply it's changes on a `JsonSerializerOptions` in our `ConfigureServices` method.
+In `Program.cs` / `Startup.ConfigureServices`:
 
 ```csharp
-services.AddControllers() //It's in your Startup.ConfigureServices method
-    .AddJsonOptions(opt =>
+services.AddControllers()
+    .AddJsonOptions(options =>
     {
-        RegisterPartialUpdateDto(opt.JsonSerializerOptions, typeof(Startup).Assembly);
+        PartialUpdateDtoRegistration.RegisterPartialUpdateDto(
+            options.JsonSerializerOptions,
+            typeof(Startup).Assembly);
     });
 ```
 
 ### Controller
 
-After doing so, we are able to use `PartialUpdateDto<>` as our input models in controller actions.
 ```csharp
 [HttpPatch("{publicId}")]
 public virtual async Task<BaseResponseDto<TCrudDto>> UpdatePartialAsync(
-    [FromRoute] [Required] int publicId,
+    [FromRoute][Required] int publicId,
     [FromBody] PartialUpdateDto<TCrudDto> values,
-    CancellationToken cancellationToken
-)
+    CancellationToken cancellationToken)
 {
     return await CrudService.PartialUpdateAsync(
-        publicId, values.Properties, values.Model, cancellationToken);
-    // Or you could pass down (e.g. dispatch) the PartialUpdateDto itself.
+        publicId,
+        values.Properties,
+        values.Model,
+        cancellationToken);
 }
 ```
-* Conventional HTTP verb for partial-update is patch.
 
-### CRUD Service
+Use `PATCH` as the HTTP verb for partial updates.
 
-Now the CRUD service has both the model and a list of updated properties. You can simply write your own partial-update method like below.
+### CRUD service (direct property mapping)
+
+When DTO property names match entity property names:
+
 ```csharp
 public virtual async Task<TEntity> PartialUpdateAsync(
     TPublicKey publicId,
     HashSet<string> updatedProperties,
     TEntity updatedValues,
-    CancellationToken cancellationToken
-)
+    CancellationToken cancellationToken)
 {
     var entity = await Repository.GetByPublicId(publicId, cancellationToken);
 
@@ -218,68 +194,58 @@ public virtual async Task<TEntity> PartialUpdateAsync(
         throw new EntityNotFoundException(typeof(TEntity).Name, publicId);
     }
 
-    if (updatedProperties.Any())
+    if (!updatedProperties.Any())
     {
-        var properties = typeof(TEntity)
-            .GetProperties(
-                BindingFlags.Public |
-                BindingFlags.SetProperty |
-                BindingFlags.Instance
-            )
-            .ToDictionary(k => k.Name.ToLower(), v => v);
+        return entity;
+    }
 
-        var hasChange = false;
+    var properties = typeof(TEntity)
+        .GetProperties(BindingFlags.Public | BindingFlags.Instance | BindingFlags.SetProperty)
+        .ToDictionary(p => p.Name, p => p, StringComparer.OrdinalIgnoreCase);
 
-        foreach (var value in updatedProperties)
+    var hasChanges = false;
+
+    foreach (var propertyName in updatedProperties)
+    {
+        if (!properties.TryGetValue(propertyName, out var property))
         {
-            if (properties.TryGetValue(value, out var property)) {
-                var oldValue = property.GetValue(entity);
-                var newValue = property.GetValue(updateTarget);
-
-                if (Object.Equals(oldValue, newValue))
-                {
-                    continue;
-                }
-
-                hasChange = true;
-
-                //entity.Property = (TProperty) updatedEntity.Property
-                property.SetValue(
-                    entity,
-                    Convert.ChangeType(
-                        newValue,
-                        property.PropertyType
-                    )
-                );
-            }
+            continue;
         }
 
-        if (hasChange)
-        {
-            await Repository.Update(entity, cancellationToken);
+        var oldValue = property.GetValue(entity);
+        var newValue = property.GetValue(updatedValues);
 
-            await UnitOfWork.SaveChangesAsync(cancellationToken);
+        if (Equals(oldValue, newValue))
+        {
+            continue;
         }
+
+        hasChanges = true;
+        property.SetValue(entity, newValue);
+    }
+
+    if (hasChanges)
+    {
+        await Repository.Update(entity, cancellationToken);
+        await UnitOfWork.SaveChangesAsync(cancellationToken);
     }
 
     return entity;
 }
 ```
-This code handles partial-update very simply but it has some problems:  
-* What if we're using a mapper to map a DTO to our database models?
-* Also property.SetValue and Convert.ChangeType are so primitive and may cause problems.
 
-### Mapper-based CRUD service
+This is intentionally simple. Production code may prefer a mapping library, type-safe setters, or validation rules instead of raw reflection.
 
-If you're using a mapper, it could get complicated, because you have to integerate with your mapper to get name mappings. For this example I'm going to use `AutoMapper` to implement the mapper-based solution.
+### Mapper-based CRUD service (AutoMapper)
+
+When DTO and entity names differ, resolve mappings through AutoMapper:
 
 ```csharp
 public virtual async Task<TCrudDto> PartialUpdateAsync(
     TPublicKey publicId,
     HashSet<string> updatedProperties,
     TCrudDto updatedValues,
-    CancellationToken cancellationToken
-)
+    CancellationToken cancellationToken)
 {
     var entity = await Repository.GetByPublicId(publicId, cancellationToken);
 
@@ -288,62 +254,65 @@ public virtual async Task<TCrudDto> PartialUpdateAsync(
         throw new EntityNotFoundException(typeof(TEntity).Name, publicId);
     }
 
-    if (updatedProperties.Any())
+    if (!updatedProperties.Any())
     {
-        var properties = typeof(TEntity)
-            .GetProperties(BindingFlags.Public | BindingFlags.SetProperty | BindingFlags.Instance)
-            .ToDictionary(k => k.Name, v => v);
+        return Mapper.Map<TCrudDto>(entity);
+    }
 
-        var typeMap = Mapper.ConfigurationProvider.FindTypeMapFor(
-            typeof(TCrudDto), typeof(TEntity));
+    var entityProperties = typeof(TEntity)
+        .GetProperties(BindingFlags.Public | BindingFlags.Instance | BindingFlags.SetProperty)
+        .ToDictionary(p => p.Name, p => p);
 
-        var propertyMaps = typeMap.MemberMaps.ToDictionary(
-            k => k.SourceMember?.Name?.ToLower(),
-            v => v.DestinationName
-        );
+    var typeMap = Mapper.ConfigurationProvider.FindTypeMapFor(typeof(TCrudDto), typeof(TEntity));
+    var propertyMaps = typeMap.MemberMaps
+        .Where(m => m.SourceMember != null)
+        .ToDictionary(
+            m => m.SourceMember.Name,
+            m => m.DestinationName,
+            StringComparer.OrdinalIgnoreCase);
 
-        var updateTarget = Mapper.Map<TEntity>(updatedValues);
+    var updateTarget = Mapper.Map<TEntity>(updatedValues);
+    var hasChanges = false;
 
-        var hasChanged = false;
-
-        foreach (var value in updatedProperties)
+    foreach (var dtoPropertyName in updatedProperties)
+    {
+        if (!propertyMaps.TryGetValue(dtoPropertyName, out var entityPropertyName))
         {
-            if (propertyMaps.TryGetValue(value.ToLower(), out var propertyName))
-            {
-                if (properties.TryGetValue(propertyName, out var property))
-                {
-                    var oldValue = property.GetValue(entity);
-                    var newValue = property.GetValue(updateTarget);
-
-                    if (Object.Equals(oldValue, newValue))
-                    {
-                        continue;
-                    }
-
-                    hasChanged = true;
-
-                    //entity.Property = updatedEntity.Property
-                    property.SetValue(
-                        entity,
-                        Convert.ChangeType(
-                            newValue,
-                            property.PropertyType
-                        )
-                    );
-                }
-            }
+            continue;
         }
 
-        if (hasChanged)
+        if (!entityProperties.TryGetValue(entityPropertyName, out var property))
         {
-            await Repository.Update(entity, cancellationToken);
-
-            await UnitOfWork.SaveChangesAsync(cancellationToken);
+            continue;
         }
+
+        var oldValue = property.GetValue(entity);
+        var newValue = property.GetValue(updateTarget);
+
+        if (Equals(oldValue, newValue))
+        {
+            continue;
+        }
+
+        hasChanges = true;
+        property.SetValue(entity, newValue);
+    }
+
+    if (hasChanges)
+    {
+        await Repository.Update(entity, cancellationToken);
+        await UnitOfWork.SaveChangesAsync(cancellationToken);
     }
 
     return Mapper.Map<TCrudDto>(entity);
 }
 ```
 
-This implementation should be enough for simple shallow models, but for complex, relation-based models, it's not satisfying, and you have to implement a complex CRUD service, which is out of the scope of this article, but you could implement your own.
+This works well for shallow models. Nested objects, collections, and relationship graphs need domain-specific merge rules beyond what a generic helper can provide.
+
+## Summary
+
+- Partial update narrows the API contract; the server still reads and writes storage.
+- `PartialUpdateDto<T>` plus a JSON converter separates **values** from **which fields were sent**.
+- Register converters once, expose `PATCH` endpoints, and apply only listed properties—through direct mapping or AutoMapper.
+- Combine with concurrency tokens for safe concurrent edits, and consider JSON Patch when a standard patch document format is enough.

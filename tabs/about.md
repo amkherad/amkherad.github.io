@@ -1,8 +1,8 @@
 ---
 title: About
 ---
-Full-stack developer with 10+ years of experience in making small to big applications and systems.
-I designed and implemented many softwares throughout these years including 20+ compilers,
+Full-stack developer with 10+ years of experience building applications and systems from small tools to large platforms.
+I have designed and implemented many projects over the years, including 20+ compilers,
 10+ full-stack frameworks in different environments. I began writing code when I was around 14,
 and the first piece of code I ever wrote was a very simple interpreter for C language in C!,
 when I was learning C language I tried to implement the simple functions that the book
@@ -31,7 +31,7 @@ I didn't know what I was doing back then, but now I know that the first code I w
 # Education
 * Master's degree in Software Engineering
     * [Payame Noor University - Tehran-Shomal](http://teh-shomal.pnu.ac.ir/), Tehran
-    * February 2020 to Present
+    * February 2020 – 2024
 * Bachelor's degree in IT (Web Programming)
     * [University of Applied Science and Technology - Dade Pardazi (aka IBM)](http://www.dpicollege.ir/), Tehran
     * January 2015 to September, 2018

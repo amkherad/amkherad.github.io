@@ -10,10 +10,11 @@
 
 title: Ali Mousavi Kherad       # the main title
 
-tagline: My personal weblog about programming.  # it will display as the sub-title
+tagline: Notes on .NET, distributed systems, and software architecture.
 
 description: >-                        # used by seo meta and the atom feed
-  Ali Mousavi Kherad personal weblog about programming.
+  Ali Mousavi Kherad writes about .NET, Entity Framework, ASP.NET, concurrency,
+  and distributed systems.
 
 
 # Replace with the website url, e.g. 'https://username.github.io'
@@ -39,8 +40,7 @@ social:
     - https://twitter.com/amkherad      # change to your twitter homepage
     - https://github.com/amkherad       # change to your github homepage
     # Uncomment below to add more social links
-    - https://www.facebook.com/username
-    - https://www.linkedin.com/in/username
+    - https://www.linkedin.com/in/ali-mousavi-kherad-b5b2a357/
 
 google_site_verification: google_meta_tag_verification # change to your verification string
 
@@ -55,9 +55,11 @@ baseurl: ''
 timezone: Asia/Tehran
 
 google_analytics:
-  id: 'UA-176003281-1'          # Fill with your Google Analytics ID
+  # GA4 Measurement ID (Admin → Data streams → your web stream).
+  # Replace with your G-XXXXXXXXXX value; the old UA- ID is not valid for GA4.
+  id: 'G-XXXXXXXXXX'
   pv:
-    # The Google Analytics pageviews switch.
+    # Post view counts via GA Reporting API (UA-only). Leave disabled for GA4.
     # DO NOT enable it unless you know how to deploy the Google Analytics superProxy.
     enabled: false
     # the next options only valid when `google_analytics.pv` is enabled.
