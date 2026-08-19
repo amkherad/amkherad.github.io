@@ -1,0 +1,9 @@
+{% assign filter_lang = include.lang | default: active_lang | default: site.default_lang | default: 'en' %}
+{% assign filtered_posts = "" | split: "" %}
+
+{% for post in site.posts %}
+  {% assign post_lang = post.lang | default: site.default_lang | default: 'en' %}
+  {% if post_lang == filter_lang %}
+    {% assign filtered_posts = filtered_posts | push: post %}
+  {% endif %}
+{% endfor %}

@@ -1,6 +1,8 @@
 ---
 title: Partial Update in ASP.NET
 description: Implement PATCH-style partial updates in ASP.NET Core by tracking which JSON properties were sent, with AutoMapper integration.
+lang: en
+translation_key: partial-update-asp-net
 categories: [DotNET, ASP.net]
 tags: [partial-update]
 ---

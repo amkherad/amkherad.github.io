@@ -1,0 +1,32 @@
+<div id="lang-switcher" class="d-flex flex-wrap justify-content-center w-100 px-2">
+  {% for lang in site.languages %}
+    {% assign lang_locale = site.data.locales[lang] %}
+    {% if lang == active_lang %}
+      <span class="btn-lang active mx-1" aria-current="true">{{ lang_locale.short_name }}</span>
+    {% else %}
+      {% if lang == site.default_lang %}
+        {% assign switch_url = '/' %}
+      {% else %}
+        {% assign switch_url = '/' | append: lang | append: '/' %}
+      {% endif %}
+
+      {% if page.translation_key %}
+        {% assign alt_pages = site.posts | where: 'translation_key', page.translation_key | where: 'lang', lang %}
+        {% assign alt_page = alt_pages | first %}
+        {% unless alt_page %}
+          {% assign alt_pages = site.pages | where: 'translation_key', page.translation_key | where: 'lang', lang %}
+          {% assign alt_page = alt_pages | first %}
+        {% endunless %}
+        {% if alt_page %}
+          {% assign switch_url = alt_page.url %}
+        {% endif %}
+      {% endif %}
+
+      <a href="{{ switch_url | relative_url }}"
+        class="btn-lang mx-1"
+        hreflang="{{ lang }}"
+        lang="{{ lang }}"
+        title="{{ lang_locale.name }}">{{ lang_locale.short_name }}</a>
+    {% endif %}
+  {% endfor %}
+</div>

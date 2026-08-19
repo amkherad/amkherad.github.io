@@ -1,10 +1,13 @@
 ---
-layout: page
+layout: category
 # The Category layout
 # v2.0
 # https://github.com/cotes2020/jekyll-theme-chirpy
 # MIT Licensed
 ---
+
+{% assign current_lang = page.lang | default: site.default_lang | default: 'en' %}
+{% include filter-posts-by-lang.html lang=current_lang %}
 
 <div id="page-category">
   <h1 class="pl-lg-2">
@@ -15,6 +18,13 @@ layout: page
 
   <ul class="post-content pl-0">
     {% for post in site.categories[page.category] %}
+      {% assign post_lang = post.lang | default: site.default_lang %}
+      {% if current_lang != site.default_lang and post_lang != current_lang %}
+        {% continue %}
+      {% endif %}
+      {% if current_lang == site.default_lang and post_lang != site.default_lang and post.lang != nil %}
+        {% continue %}
+      {% endif %}
     <li class="d-flex justify-content-between pl-md-3 pr-md-3">
       <a href="{{ post.url | relative_url }}">{{ post.title }}</a>
       <span class="dash flex-grow-1"></span>

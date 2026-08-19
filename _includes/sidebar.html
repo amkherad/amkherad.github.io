@@ -9,7 +9,7 @@
 <div id="nav-wrapper">
   <div id="profile-wrapper" class="d-flex flex-column">
     <div id="avatar" class="d-flex justify-content-center">
-      <a href="{{ site.baseurl }}/" alt="avatar">
+      <a href="{{ site.baseurl }}{% if active_lang != site.default_lang %}/{{ active_lang }}/{% else %}/{% endif %}" alt="avatar">
         {% assign avatar_url = site.avatar %}
         {% capture start %}{{ site.avatar | slice: 0 }}{% endcapture %}
         {% if start == '/' %}
@@ -21,7 +21,7 @@
 
     <div class="profile-text mt-3">
       <div class="site-title">
-        <a href="{{ '/' | relative_url }}">{{- site.title -}}</a>
+        <a href="{% if active_lang != site.default_lang %}{{ '/' | append: active_lang | append: '/' | relative_url }}{% else %}{{ '/' | relative_url }}{% endif %}">{{- site.title -}}</a>
       </div>
       <div class="site-subtitle font-italic">{{- site.tagline -}}</div>
     </div>
@@ -31,22 +31,24 @@
   {% assign page_urls = page.url | split: "/" %}
 
   {% for item in site.data.tabs %}
-    {% assign ref = site.baseurl | append: "/" %}
+    {% capture ref %}{{ site.baseurl }}{% if active_lang != site.default_lang %}/{{ active_lang }}{% endif %}{% endcapture %}
+    {% assign tab_label = locale.tabs[item.key] | default: item.key %}
 
     {% if item.path %}
-      {% assign ref = ref | append: item.path | append: "/" %}
+      {% assign ref = ref | append: '/' | append: item.path %}
       {% if item.url %}
-        {% assign ref = ref | append: item.url | append: "/" %}
+        {% assign ref = ref | append: '/' | append: item.url %}
       {% endif %}
     {% endif %}
+    {% assign ref = ref | append: '/' %}
 
     <li class="nav-item d-flex justify-content-center
       {% if item.url == page_urls.last
-        or item.name == page.tab_active
-        or item.name == "Home" and page.layout == "home" %}active{% endif %}">
+        or item.key == page.tab_active
+        or item.key == 'home' and page.layout == 'home' %}active{% endif %}">
       <a href="{{ ref }}" class="nav-link d-flex justify-content-center align-items-center w-100">
         <i class="fa-fw {{ item.icon }} ml-xl-3 mr-xl-3 unloaded"></i>
-        <span>{{ item.name | upcase }}</span>
+        <span>{{ tab_label | upcase }}</span>
       </a>
     </li> <!-- .nav-item -->
   {% endfor %}
@@ -86,5 +88,7 @@
     </a>
     {% endif %}
   {% endfor %}
+
+  {% include lang-switcher.html %}
 
 </div>

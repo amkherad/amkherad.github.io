@@ -18,9 +18,9 @@ layout: default
       <div class="post-meta text-muted d-flex flex-column">
         <!-- Published date and author -->
         <div>
-          Posted
+          {{ locale.post.posted }}
           {% include timeago.html date=page.date tooltip=true %}
-          by
+          {{ locale.post.by }}
           <span class="author">
           {% if page.author %}
             {{ page.author }}
@@ -45,7 +45,7 @@ layout: default
 
         {% if lastmod %}
         <div>
-          Updated
+          {{ locale.post.updated }}
           {% include timeago.html date=lastmod class="lastmod" tooltip=true %}
         </div>
         {% endif %}
@@ -54,7 +54,7 @@ layout: default
         {% if site.google_analytics.pv.enabled %}
         <div>
           <span id="pv" class="pageviews"><i class="fas fa-spinner fa-spin fa-fw"></i></span>
-          views
+          {{ locale.post.views }}
         </div>
         {% endif %}
 
@@ -102,9 +102,9 @@ layout: default
           d-flex justify-content-between align-items-center mt-3 pt-5 pb-2">
           {% if site.data.rights.license %}
           <div class="license-wrapper">
-            This post is licensed under
+            {{ locale.post.licensed }}
             <a href="{{ site.data.rights.license.link }}">{{ site.data.rights.license.name }}</a>
-            by the author.
+            {{ locale.post.by_author }}
           </div>
           {% endif %}
 

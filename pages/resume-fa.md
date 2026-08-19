@@ -1,7 +1,11 @@
 ---
-layout: page-rtl
-permalink: /tabs/about/fa/
-title: رزومه فارسی علی موسوی خرد
+layout: page
+lang: fa
+translation_key: about
+permalink: /fa/tabs/about/
+redirect_from:
+  - /tabs/about/fa/
+title: درباره من
 ---
 
 # درباره من

@@ -1,0 +1,58 @@
+name: فارسی
+short_name: FA
+dir: rtl
+rtl: true
+
+tabs:
+  home: خانه
+  categories: دسته‌بندی‌ها
+  tags: برچسب‌ها
+  archives: آرشیو
+  about: درباره
+
+panel:
+  lastmod: به‌روزرسانی‌های اخیر
+  trending_tags: برچسب‌های پرطرفدار
+  toc: فهرست
+
+post:
+  posted: منتشر شده
+  updated: به‌روزرسانی
+  by: توسط
+  views: بازدید
+  pinned: سنجاق‌شده
+  relate_posts: مطالب مرتبط
+  licensed: این نوشته تحت مجوز
+  by_author: توسط نویسنده منتشر شده است.
+  button:
+    next: جدیدتر
+    previous: قدیمی‌تر
+
+footer:
+  powered_by: قدرت گرفته از
+  with: با
+  theme: .
+
+search_hint: جستجو
+search_cancel: انصراف
+
+breadcrumb:
+  posts: نوشته‌ها
+  home: خانه
+
+timeago:
+  day: روز
+  days: روز
+  hour: ساعت
+  hours: ساعت
+  minute: دقیقه
+  minutes: دقیقه
+  just: همین
+  now: الان
+  just_now: همین الان
+
+categories:
+  category: دسته
+  categories: دسته
+  post: نوشته
+  posts: نوشته

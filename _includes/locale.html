@@ -1,0 +1,20 @@
+{% comment %}
+  Resolve the active language, locale strings, and URL prefix.
+{% endcomment %}
+
+{% assign active_lang = page.lang | default: site.default_lang | default: 'en' %}
+{% assign locale = site.data.locales[active_lang] %}
+
+{% if locale == nil %}
+  {% assign active_lang = 'en' %}
+  {% assign locale = site.data.locales.en %}
+{% endif %}
+
+{% assign locale_dir = locale.dir | default: 'ltr' %}
+{% assign locale_rtl = locale.rtl | default: false %}
+
+{% if active_lang == site.default_lang %}
+  {% assign locale_prefix = '' %}
+{% else %}
+  {% assign locale_prefix = active_lang | append: '/' %}
+{% endif %}

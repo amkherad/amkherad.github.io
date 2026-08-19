@@ -1,6 +1,8 @@
 ---
 title: Entity Framework - Automatic EntityTypeConfiguration Registration
 description: Automatically register all IEntityTypeConfiguration classes in an assembly using expression trees, with optional per-DbContext filtering.
+lang: en
+translation_key: entity-framework-entity-type-configuration-applier
 tags: ["entity-framework", "entity-type-configuration", "multi-context", "db-context"]
 categories: [DotNET, Entity Framework]
 ---

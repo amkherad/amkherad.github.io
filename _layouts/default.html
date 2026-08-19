@@ -9,11 +9,7 @@ layout: compress
 
 <!DOCTYPE html>
 
-{% if site.lang %}
-  {% assign lang = site.lang | split: "_" | first %}
-{% else %}
-  {% assign lang = 'en' %}
-{% endif %}
+{% include locale.html %}
 
 {% capture prefer_mode %}
   {% if site.theme_mode != "dual" %}
@@ -21,11 +17,11 @@ layout: compress
   {% endif %}
 {% endcapture %}
 
-<html lang="{{ lang }}" {{ prefer_mode }} >
+<html lang="{{ active_lang }}" dir="{{ locale_dir }}" {{ prefer_mode }} >
 
   {% include head.html %}
 
-  <body data-spy="scroll" data-target="#toc">
+  <body data-spy="scroll" data-target="#toc" data-locale="{{ active_lang }}"{% if locale_rtl %} class="rtl farsi-font"{% endif %}>
 
     <div id="sidebar" class="d-flex flex-column">
       {% include sidebar.html %}

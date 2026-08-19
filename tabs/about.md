@@ -1,5 +1,7 @@
 ---
 title: About
+lang: en
+translation_key: about
 ---
 Full-stack developer with 10+ years of experience building applications and systems from small tools to large platforms.
 I have designed and implemented many projects over the years, including 20+ compilers,
@@ -71,7 +73,3 @@ I didn't know what I was doing back then, but now I know that the first code I w
         title="profile for Ali Mousavi Kherad at Stack Overflow, Q&amp;A for professional and enthusiast programmers"
         />
 </a>
-
-<!-- 
-[رزومه به زبان فارسی](/tabs/about/fa/)
--->

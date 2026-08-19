@@ -1,8 +1,9 @@
 ---
-title: Archives
+title: آرشیو
 type: archives
-lang: en
+lang: fa
 tab_active: archives
+permalink: /fa/tabs/archives/
 ---
 
 {% include archives-list.html lang=page.lang %}

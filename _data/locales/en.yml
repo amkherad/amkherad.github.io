@@ -1,0 +1,58 @@
+name: English
+short_name: EN
+dir: ltr
+rtl: false
+
+tabs:
+  home: Home
+  categories: Categories
+  tags: Tags
+  archives: Archives
+  about: About
+
+panel:
+  lastmod: Recent Update
+  trending_tags: Trending Tags
+  toc: Contents
+
+post:
+  posted: Posted
+  updated: Updated
+  by: by
+  views: views
+  pinned: Pinned
+  relate_posts: Further Reading
+  licensed: This post is licensed under
+  by_author: by the author.
+  button:
+    next: Newer
+    previous: Older
+
+footer:
+  powered_by: Powered by
+  with: with
+  theme: theme.
+
+search_hint: Search
+search_cancel: Cancel
+
+breadcrumb:
+  posts: Posts
+  home: Home
+
+timeago:
+  day: day
+  days: days
+  hour: hour
+  hours: hours
+  minute: minute
+  minutes: minutes
+  just: Just
+  now: now
+  just_now: just now
+
+categories:
+  category: category
+  categories: categories
+  post: post
+  posts: posts

@@ -18,7 +18,7 @@
 
     <div id="access-lastmod" class="post">
       <h3 data-toc-skip>
-        {{- site.data.label.panel.lastmod -}}
+        {{- locale.panel.lastmod -}}
       </h3>
       <ul class="post-content pl-0 pb-1 ml-1 mt-2">
 
@@ -45,7 +45,7 @@
   {% if trending_tags.size > 0 %}
     <div id="access-tags">
       <h3 data-toc-skip>
-        {{- site.data.label.panel.trending_tags -}}
+        {{- locale.panel.trending_tags -}}
       </h3>
       <div class="d-flex flex-wrap mt-3 mb-1 mr-3">
 
@@ -61,7 +61,7 @@
   {% if page.layout == 'post' and site.toc and page.toc %}
   <div id="toc-wrapper" class="pl-0 pr-4 mb-5">
     <h3 data-toc-skip class="pl-3 pt-2 mb-2">
-      {{- site.data.label.panel.toc -}}
+      {{- locale.panel.toc -}}
     </h3>
     <nav id="toc" data-toggle="toc"></nav>
   </div>

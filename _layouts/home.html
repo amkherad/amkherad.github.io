@@ -7,42 +7,41 @@ layout: page
 # MIT Licensed
 ---
 
+{% assign current_lang = page.lang | default: site.default_lang | default: 'en' %}
+{% include filter-posts-by-lang.html lang=current_lang %}
 
-{% assign pinned = site.posts | where_exp: "item", "item.pin == true"  %}
-{% assign default = site.posts | where_exp: "item", "item.pin == nil "  %}
+{% assign pinned = filtered_posts | where_exp: "item", "item.pin == true" %}
+{% assign default = filtered_posts | where_exp: "item", "item.pin == nil" %}
 {% assign posts = "" | split: "" %}
 
-<!-- Get pinned posts -->
+{% if current_lang == site.default_lang and paginator.total_pages > 0 %}
+  {% assign offset = paginator.page | minus: 1 | times: paginator.per_page %}
+  {% assign pinned_num = pinned.size | minus: offset %}
 
-{% assign offset = paginator.page | minus: 1 | times: paginator.per_page %}
-{% assign pinned_num = pinned.size | minus: offset %}
+  {% if pinned_num > 0 %}
+    {% for i in (offset..pinned.size) limit: pinned_num %}
+      {% assign posts = posts | push: pinned[i] %}
+    {% endfor %}
+  {% else %}
+    {% assign pinned_num = 0 %}
+  {% endif %}
 
-{% if pinned_num > 0 %}
-  {% for i in (offset..pinned.size) limit: pinned_num %}
-    {% assign posts = posts | push: pinned[i] %}
-  {% endfor %}
+  {% assign default_beg = offset | minus: pinned.size %}
+  {% if default_beg < 0 %}
+    {% assign default_beg = 0 %}
+  {% endif %}
+
+  {% assign default_num = paginator.posts | size | minus: pinned_num %}
+  {% assign default_end = default_beg | plus: default_num | minus: 1 %}
+
+  {% if default_num > 0 %}
+    {% for i in (default_beg..default_end) %}
+      {% assign posts = posts | push: default[i] %}
+    {% endfor %}
+  {% endif %}
 {% else %}
-  {% assign pinned_num = 0 %}
+  {% assign posts = filtered_posts %}
 {% endif %}
-
-
-<!-- Get default posts -->
-
-{% assign default_beg = offset | minus: pinned.size %}
-
-{% if default_beg < 0 %}
-  {% assign default_beg = 0 %}
-{% endif %}
-
-{% assign default_num = paginator.posts | size | minus: pinned_num  %}
-{% assign default_end = default_beg | plus: default_num | minus: 1 %}
-
-{% if default_num > 0 %}
-  {% for i in (default_beg..default_end) %}
-    {% assign posts = posts | push: default[i] %}
-  {% endfor %}
-{% endif %}
-
 
 <div id="post-list">
 
@@ -53,7 +52,7 @@ layout: page
       <h1><a href="{{ post.url | relative_url }}">{{ post.title }}</a></h1>
       {% if post.pin %}
         <i class="fas fa-thumbtack fa-fw text-muted mt-1 ml-2 mt-xl-2" data-toggle="tooltip" data-placement="left"
-        title="Pinned"></i>
+        title="{{ locale.post.pinned }}"></i>
       {% endif %}
     </div>
     <div class="post-content">
@@ -64,11 +63,9 @@ layout: page
     </div>
 
     <div class="post-meta text-muted">
-      <!-- posted date -->
       <i class="far fa-clock fa-fw"></i>
       {% include timeago.html date=post.date tooltip=true %}
 
-      <!-- page views -->
       {% if site.google_analytics.pv.enabled %}
       <i class="far fa-eye fa-fw"></i>
       <span id="pv_{{-post.title-}}" class="pageviews">
@@ -76,12 +73,12 @@ layout: page
       </span>
       {% endif %}
     </div>
-  </div> <!-- .post-review -->
+  </div>
 
 {% endfor %}
 
-</div> <!-- #post-list -->
+</div>
 
-{% if paginator.total_pages > 0 %}
+{% if current_lang == site.default_lang and paginator.total_pages > 0 %}
   {% include post-paginator.html %}
 {% endif %}

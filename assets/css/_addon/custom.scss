@@ -19,3 +19,15 @@
 .farsi-font * {
     font-family: 'IRANSans', 'Iran Sans', "B Yekan", "Yekan"
 }
+
+.btn-lang {
+    &.active {
+        font-weight: 700;
+        border-color: var(--link-color) !important;
+    }
+}
+
+#lang-switcher {
+    width: 100%;
+    margin-top: 0.5rem;
+}
