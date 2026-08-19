@@ -14,6 +14,8 @@
 DEST=_site
 URL_IGNORE=cdn.jsdelivr.net
 
+ruby .agents/skills/sync-post-translations/scripts/check-translations.rb || exit 1
+
 bundle exec htmlproofer $DEST \
   --disable-external \
   --check-html \
